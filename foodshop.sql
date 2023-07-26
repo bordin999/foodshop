@@ -1,0 +1,73 @@
+
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    shopname VARCHAR(255) NOT NULL,
+    dateacreate TIMESTAMP NOT NULL,
+    status INTEGER NOT NULL,
+    role INTEGER NOT NULL
+);
+
+CREATE TABLE items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    price INTEGER NOT NULL,
+    status INTEGER NOT NULL
+);
+
+CREATE TABLE sets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    status INTEGER NOT NULL
+);
+
+CREATE TABLE orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    item_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    table_name INTEGER NOT NULL,
+    status INTEGER NOT NULL,
+    dateacreate TIMESTAMP NOT NULL
+);
+
+CREATE TABLE payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    order_id INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
+    status INTEGER NOT NULL,
+    dateacreate TIMESTAMP NOT NULL
+);
+
+CREATE TABLE payments_options (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    percentage INTEGER NOT NULL,
+    status INTEGER NOT NULL
+);
+
+CREATE TABLE line_token (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    token VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE shop_table (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL
+);
+
+CREATE TABLE menu (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    price INTEGER NOT NULL,
+    status INTEGER NOT NULL
+)

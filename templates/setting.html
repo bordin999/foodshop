@@ -1,0 +1,142 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Setting
+{% endblock %}
+
+{% block classbody %}
+class="setting"
+{% endblock classbody %}
+
+{% block main %}
+  <div class="container">
+    <div class="card p-2 my-3 text-center">
+      <h3>Setting</h3>
+    </div>
+    
+    <div class="card mt-2 text-center">
+      <div class="card-header mb-2">
+        <h5 class="fw-bold">How many table</h5>
+      </div>
+      <form action="/settable" method="post" class="align-self-center mb-4">
+        <p>Your set : {{table}}</p>
+        <div class="row">
+          <div class="col-auto align-self-center">
+            <label for="table" class="form-label m-0">Set table :</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" name="table" class="form-control" value={{table}} />
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>  
+      </form>      
+    </div>
+    <div class="card mt-2 text-center">
+      <div class="card-header mb-2">
+        <h5 class="fw-bold">Add menu</h5>
+      </div>
+      <form action="/addmenu" method="post" class="align-self-center mb-4">
+        <div class="row">
+          <div class="col-auto align-self-center">
+            <label for="name" class="form-label m-0">Menu :</label>
+          </div>
+          <div class="col-auto">
+            <input type="text" name="name" class="form-control" required />
+          </div>
+          <div class="col-auto align-self-center">
+            <label for="price" class="form-label m-0">Price :</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" name="price" class="form-control" required />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card mt-2 text-center">
+      <div class="card-header mb-4">
+        <h5 class="fw-bold">Menu</h5>
+      </div>
+      <table class="table table-bordered table-hover table-setting">
+        <thead>
+          <tr>
+            <th class="menu">Menu</th>
+            <th class="price">Price</th>
+            <th class="show">Status</th>
+            <th class="delete">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for menu in items %}
+            <tr>
+              <td>{{menu[1]}}</td>
+              <td>$ {{menu[2]}}</td>
+              <td>
+                {% if menu[3] == 0 %}
+                  <form action="/menustatus" method="post">
+                    <input type="hidden" name="id" value={{menu[0]}}>
+                    <input type="hidden" name="status" value="1">
+                    <button type="submit" class="btn btn-danger">Disable</button>
+                  </form>
+                {% else %}
+                  <form action="/menustatus" method="post">
+                    <input type="hidden" name="id" value={{menu[0]}}>
+                    <input type="hidden" name="status" value="0">
+                    <button type="submit" class="btn btn-success">Enable</button>
+                  </form>
+                {% endif %}
+              </td>
+              <td>
+                <form action="/deletemenu" method="post">
+                  <input type="hidden" name="id" value="{{menu[0]}}" />
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card my-2 p-2">
+      <p class="fw-bold">Line Token</p>
+      <form method="post" action="/line">
+            <label for="line" class="form-label m-0">Your Line Token : {{line}}</label>
+        <br>
+        <div class="row">
+          <div class="col-auto align-self-center">
+            <label for="line" class="form-label m-0">New Line Token :</label>
+          </div>
+          <div class="col">
+            <input type="text" name="line" class="form-control" />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </form>
+      {% if message %}
+        {{ message }}
+      {% endif %}
+      <hr />
+      <p>
+        Line Token mean you can use line notify to send message to your line account. You can get your line token from <a href="https://notify-bot.line.me/my/" target="_blank">here</a><br />
+        <b>NOTE :</b> You can only use one line token at a time. <br />
+      </p>
+      <div class="card p-2 bg-light">
+        <b><u>How to:</u></b>
+        <ol>
+          <li>Click on the link above.</li>
+          <li>Click on the "Generate Token" button.</li>
+          <li>Give it a name and select the group you want to send message to.</li>
+          <li>Click on the "Generate Token" button.</li>
+          <li>Copy the token and paste it in the box above.</li>
+          <li>Click on the "Submit" button.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+{% endblock %}

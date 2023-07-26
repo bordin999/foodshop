@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+  {% if message %}
+    <script>
+        Swal.fire({
+            title: 'success!',
+            icon: 'success',
+            button: 'OK',
+        }).then((value) => {
+            window.location.href = '/';
+        });
+    </script>
+  {% endif %}
+{% endblock %}
